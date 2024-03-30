@@ -28,6 +28,26 @@ from llama_index.core.evaluation import QueryResponseDataset
 from llama_index.core.evaluation.eval_utils import get_responses
 from llama_index.core.evaluation import CorrectnessEvaluator, BatchEvalRunner
 import numpy as np
+from llama_index.core import SimpleDirectoryReader
+from llama_index.embeddings.openai import OpenAIEmbedding
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+
+
+# load specific files within the data directory
+reader = SimpleDirectoryReader(input_dir="../data/")
+docs = reader.load_data()
+print(f"loaded {len(docs)} documents")   # output: loaded 174 documents
+
+# only load pdf files
+required_ext = [".pdf"]
+pdf_reader = SimpleDirectoryReader(
+    input_dir="../data",
+    required_exts=required_ext,
+    recursive=True,
+)
+
+docs_pdf = pdf_reader.load_data()
+print(f"loaded {len(docs_pdf)} pdf documents")  # output: loaded 173 pdf documents, which means it's correctly ignoring the txt file
 
 load_dotenv()
 
@@ -35,6 +55,36 @@ load_dotenv()
 api_key = os.getenv('OPENAI_API_KEY')
 if not api_key:
     raise ValueError("Please set the OPENAI_API_KEY environment variable.")
+
+
+'''
+Perform some embedding with the data
+- Purpose of embeddings: are used in llamaindex to represent your documents using a sophisiticated numerical representation. Embedding models take text as input, and return a long list of numbers used to capture the semantics of the text.
+'''
+
+#Settings.embed_model = OpenAIEmbedding()
+
+Settings.embed_model = HuggingFaceEmbedding(
+    model_name="BAAI/bge-small-en-v1.5"
+)
+
+embed_model1 = HuggingFaceEmbedding(
+    model_name="BAAI/bge-small-en-v1.5", 
+    embed_batch_size=42
+)
+
+embed_model2 = OpenAIEmbedding()   # use this if hugging face doesn't perform well
+
+#per-index
+index=VectorStoreIndex.from_documents(docs, embed_model=embed_model1)   # we are embedding the docs data which we imported using simpleDirectoryReader
+
+query_engine = index.as_query_engine()
+response = query_engine.query("what information relevant to the dental procedures were you able to extract from the pdfs?")
+print(response)   # output: model embedding works as intended
+
+
+
+
 
 # load all the pdf that contains information on the procedures
 docs0_crossbite = PyMuPDFReader().load(file_path=Path("../data/crossbite.pdf"))
@@ -49,9 +99,13 @@ docs6_overjet = PyMuPDFReader().load(file_path=Path("../data/overjet.pdf"))
 docs7_underbite = PyMuPDFReader().load(file_path=Path("../data/underbite.pdf"))
 docs8_zirconium = PyMuPDFReader().load(file_path=Path("../data/zirconium-veneer.pdf"))
 
+#print(docs0_crossbite)
+#print(docs0_crossbite.load_page(1))
+
 doc0_text = "\n\n".join([d.get_content() for d in docs0_crossbite])
 docs = [Document(text=doc0_text)]
 node_parser = SentenceSplitter(chunk_size=1024)
+print(node_parser.json)
 base_nodes = node_parser.get_nodes_from_documents(docs)  # didn't get to figure this part out earlier
 
 
