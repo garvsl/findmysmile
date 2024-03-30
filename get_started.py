@@ -2,11 +2,13 @@ import modal
 
 stub = modal.Stub("example-get-started")
 
-@stub.functions()
+
+@stub.function()
 def square(x):
     print("This code is running on a remote worker!")
-    return x ** 2
+    return x**2
+
 
 @stub.local_entrypoint()
-def main: 
-    print("The square is", square.remote(42))
+def main():
+    print("the square is", square.remote(42))
