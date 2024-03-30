@@ -47,7 +47,8 @@ def create_or_load_index():
 index = create_or_load_index()
 
 # if index is not None:
-    # query_vector = [...]  
+    #  prompt = input("Enter your query: ")
+    # query_vector = get_query_vector(model, prompt) //Place holder for semantic vector
     # results = index.query(query_vector, k=5)
 
     # for result in results:
