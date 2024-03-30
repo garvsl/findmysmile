@@ -1,0 +1,5 @@
+Classification: Anxiety/concern
+
+Sentiment: Expressing a high level of concern regarding a persistent toothache.
+
+Extended prompt: I find myself deeply troubled due to a nagging toothache that has been persistent. Could you guide me on what steps I should take in this situation?
