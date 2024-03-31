@@ -51,9 +51,67 @@ export default function Vision() {
 
   useEffect(() => {
     if (image) {
-      console.log(image);
+      (async () => {
+        const formData: any = new FormData();
+        formData.append("image", {
+          uri: image,
+          name: "photo.jpg",
+          type: "image/jpg",
+        });
+
+        try {
+          const flaskResponse = await fetch("http://127.0.0.1:5000/pred", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!flaskResponse.ok) {
+            throw new Error(
+              `Request failed with status: ${flaskResponse.status}`
+            );
+          }
+
+          const result = await flaskResponse.json();
+          console.log(result);
+
+          // Update state or perform other actions with the response
+          setModelTxt(result); // Assuming result is a string or can be converted to one
+        } catch (error) {
+          console.error("Error:", error);
+          // Handle errors as needed
+        }
+      })();
     } else if (picture) {
-      console.log(picture.uri);
+      (async () => {
+        const formData: any = new FormData();
+        formData.append("image", {
+          uri: picture.uri,
+          name: "photo.jpg",
+          type: "image/jpg",
+        });
+
+        try {
+          const flaskResponse = await fetch("http://127.0.0.1:5000/pred", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!flaskResponse.ok) {
+            throw new Error(
+              `Request failed with status: ${flaskResponse.status}`
+            );
+          }
+
+          const result = await flaskResponse.json();
+          console.log(result);
+
+          // Update state or perform other actions with the response
+          setModelTxt(result); // Assuming result is a string or can be converted to one
+        } catch (error) {
+          console.error("Error:", error);
+          // Handle errors as needed
+        }
+      })();
     }
   }, [image, picture]);
 
