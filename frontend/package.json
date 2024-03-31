@@ -46,7 +46,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "tamagui": "^1.61.3",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.0",
+    "expo-image-picker": "~14.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

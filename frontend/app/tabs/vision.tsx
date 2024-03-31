@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { FlipHorizontal2, X } from "@tamagui/lucide-icons";
+import {
+  ArrowLeft,
+  CircleDot,
+  FlipHorizontal2,
+  GalleryThumbnails,
+  Send,
+  X,
+} from "@tamagui/lucide-icons";
 import { Video } from "expo-av";
 import { Camera, CameraType } from "expo-camera";
 import * as FileSystem from "expo-file-system";
@@ -10,9 +17,12 @@ import {
   Button,
   Dialog,
   Fieldset,
+  H3,
   Image,
+  Input,
   Label,
   Paragraph,
+  ScrollView,
   Sheet,
   Text,
   TooltipSimple,
@@ -20,8 +30,10 @@ import {
   View,
   XStack,
 } from "tamagui";
+import * as ImagePicker from "expo-image-picker";
 
 import { MySafeAreaView } from "../../components/MySafeAreaView";
+import { MyStack } from "../../components/MyStack";
 
 export default function Vision() {
   const cameraRef: any = useRef();
@@ -33,6 +45,32 @@ export default function Vision() {
   const [video, setVideo] = useState<any>();
   const [picture, setPicture] = useState<any>();
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState(null);
+  const [text, setText] = useState("");
+  const [modelTxt, setModelTxt] = useState("");
+
+  useEffect(() => {
+    if (image) {
+      console.log(image);
+    } else if (picture) {
+      console.log(picture.uri);
+    }
+  }, [image, picture]);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -159,44 +197,87 @@ export default function Vision() {
   }
 
   return (
-    <Camera
-      type={cameraDir}
-      style={{
-        width: "100%",
-        height: "100%",
-        justifyContent: "flex-end",
-      }}
-      ref={cameraRef}
-    >
-      {picture && (
-        <Image
-          height={"100%"}
-          width={"100%"}
-          zIndex={99}
-          source={{ uri: picture.uri }}
-        />
-      )}
-      <View
-        flexDirection="row"
-        alignItems="center"
-        justifyContent="center"
-        gap={4}
-        marginBottom={32}
-      >
-        <Button onPress={isRecording ? stopRecording : recordVideo}>
-          {isRecording ? "Stop Recording" : "Record Video"}
-        </Button>
-        <Button onPress={takePicture}>{"Take Picture"}</Button>
-        <Button
-          onPress={() =>
-            cameraDir == CameraType.back
-              ? setCameraDir(CameraType.front)
-              : setCameraDir(CameraType.back)
-          }
+    <>
+      {picture || image ? (
+        <MySafeAreaView>
+          <MyStack flexDirection="column" justifyContent="flex-start" gap={-5}>
+            <XStack justifyContent="center" mb={"$6"} space="$5">
+              <Button
+                size={"$3"}
+                style={{ position: "absolute", left: 0 }}
+                icon={ArrowLeft}
+                onPress={() => {
+                  setPicture(undefined);
+                  setImage(null);
+                }}
+              />
+              {/* <H3>Smiler</H3> */}
+            </XStack>
+
+            <XStack alignItems="center" bottom={0} marginTop={"$5"} space="$2">
+              <Input
+                marginTop={"auto"}
+                size={"$4"}
+                flex={1}
+                onChangeText={setText}
+                placeholder="Enter your details..."
+              />
+              <Button size={"$4"}>
+                <Send size={"$1"} />
+              </Button>
+            </XStack>
+
+            <ScrollView padding={"$4"}>
+              <Image
+                source={{ uri: picture || image }}
+                width={"100%"}
+                height={300}
+              />
+              <Paragraph>{modelTxt && modelTxt}</Paragraph>
+            </ScrollView>
+          </MyStack>
+        </MySafeAreaView>
+      ) : (
+        <Camera
+          type={cameraDir}
+          style={{
+            width: "100%",
+            height: "100%",
+            justifyContent: "flex-end",
+          }}
+          ref={cameraRef}
         >
-          <FlipHorizontal2 />
-        </Button>
-      </View>
-    </Camera>
+          <View
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            gap={9}
+            marginBottom={32}
+          >
+            <Button onPress={pickImage}>
+              <GalleryThumbnails />
+            </Button>
+
+            <Button
+              size={85}
+              w={80}
+              borderRadius={"100px"}
+              onPress={takePicture}
+            >
+              <CircleDot />
+            </Button>
+            <Button
+              onPress={() =>
+                cameraDir == CameraType.back
+                  ? setCameraDir(CameraType.front)
+                  : setCameraDir(CameraType.back)
+              }
+            >
+              <FlipHorizontal2 />
+            </Button>
+          </View>
+        </Camera>
+      )}
+    </>
   );
 }
