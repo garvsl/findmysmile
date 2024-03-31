@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "scheme": "findmysmile",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "backgroundColor": "#FFFCED",
+      "image": "./assets/splash.png",
+      "resizeMode": "contain"
+    },
+    "icon": "./assets/icon.png",
+    "name": "findmysmile",
+    "slug": "findmysmile",
+    "ios": {
+      "bundleIdentifier": "com.findmysmile"
+    },
+    "android": {
+      "package": "com.findmysmile"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
+  }
+}
