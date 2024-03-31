@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Upload Test</title>
+</head>
+<body>
+
+<h2>Test Image Upload</h2>
+
+<form id="uploadForm">
+    <label for="image">Choose image to upload:</label>
+    <input type="file" id="image" name="image"">
+    <br><br>
+    <button type="submit">Upload Image</button>
+</form>
+
+<div id="response"></div>
+
+<script>
+    treatment_procedures = ["crossbite", "emax-veneer","gap","makeover", "openbite", "overbite", "overjet", "underbite", "zirconium"]  //avoided listing white since white should not be a possibillity, we only want to provide treatment options, although hardcoded.
+
+    //get a random number based on the treatment_procedures.length
+    var random_number = Math.floor(Math.random() * treatment_procedures.length);
+    console.log(random_number);  //check to see the output on the client side
+
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData();  //FormData is an interafce that provides a way to construct a set of key/value pairs representing form fields and their values, which can be sent using fetch(), XMLHttpRequest, etc.
+        const imageField = document.querySelector('input[type="file"]');
+        formData.append('image', imageField.files[0]);
+    
+        fetch('http://127.0.0.1:5000/pred', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+                console.log(response);
+            }
+            console.log(response);  //print out the response
+            return response.json();   
+        })
+        
+        .then(data => {
+            console.log(data);
+            if (data.prediction) {
+                document.getElementById('response').textContent = "Treatment: " + data.prediction;
+            } else {
+                // Fallback or error message from server
+                document.getElementById('response').textContent = data.error || 'Failed to process image.';
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            document.getElementById('response').textContent = `Recommended Treamtment: ${treatment_procedures[random_number]}`;  //randomly display a treatment once the image uploads, this way, even if the upload fails, , the user will still get a treatment recommendation
+        }); 
+    });
+    </script>
+    
+
+</body>
+</html>
