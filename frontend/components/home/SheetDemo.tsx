@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import { Sheet, SheetProps, useSheet } from "@tamagui/sheet";
 import { Button, H1, H2, Input, Paragraph, XStack, YStack } from "tamagui";
 
-export const SheetDemo = ({ children, open, setOpen }: any) => {
+export const SheetDemo = ({ children, text, open, setOpen }: any) => {
   const snapPoints = [85, 50, 25];
   return (
     <>
@@ -33,10 +33,7 @@ export const SheetDemo = ({ children, open, setOpen }: any) => {
           space="$5"
         >
           <Sheet.ScrollView>
-            <YStack
-              p="$5"
-              gap="$8"
-            >
+            <YStack p="$5" gap="$8">
               <Button
                 size="$6"
                 circular
@@ -45,13 +42,10 @@ export const SheetDemo = ({ children, open, setOpen }: any) => {
                 onPress={() => setOpen(false)}
               />
 
-              <H2>Hello world</H2>
+              <H2>{text}</H2>
 
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <Paragraph
-                  key={i}
-                  size="$8"
-                >
+                <Paragraph key={i} size="$8">
                   Eu officia sunt ipsum nisi dolore labore est laborum laborum
                   in esse ad pariatur. Dolor excepteur esse deserunt voluptate
                   labore ea. Exercitation ipsum deserunt occaecat cupidatat

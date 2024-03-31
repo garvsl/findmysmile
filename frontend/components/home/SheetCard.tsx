@@ -84,7 +84,7 @@ export const SheetCard = forwardRef(function SheetCard(
         overshootFriction={7}
         onSwipeableWillOpen={func}
       >
-        <SheetDemo open={open} setOpen={setOpen}>
+        <SheetDemo text={text} open={open} setOpen={setOpen}>
           <DemoCard
             text={text}
             iconText={iconText}

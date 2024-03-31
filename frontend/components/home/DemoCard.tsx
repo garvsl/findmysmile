@@ -53,7 +53,7 @@ export const DemoCard = ({
               color={"black"}
               fontWeight={"bold"}
               mb={-6}
-              size={"$2"}
+              size={"$3"}
               textAlign="left"
             >
               {rating}/5

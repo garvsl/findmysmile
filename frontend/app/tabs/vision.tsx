@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X } from "@tamagui/lucide-icons";
+import { FlipHorizontal2, X } from "@tamagui/lucide-icons";
 import { Video } from "expo-av";
 import { Camera, CameraType } from "expo-camera";
 import * as FileSystem from "expo-file-system";
@@ -18,7 +18,7 @@ import {
   TooltipSimple,
   Unspaced,
   View,
-  XStack
+  XStack,
 } from "tamagui";
 
 import { MySafeAreaView } from "../../components/MySafeAreaView";
@@ -63,7 +63,7 @@ export default function Vision() {
     const options = {
       quality: "1080p",
       maxDuration: 60,
-      mute: false
+      mute: false,
     };
 
     cameraRef.current.recordAsync(options).then((recordedVideo) => {
@@ -164,7 +164,7 @@ export default function Vision() {
       style={{
         width: "100%",
         height: "100%",
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
       }}
       ref={cameraRef}
     >
@@ -194,7 +194,7 @@ export default function Vision() {
               : setCameraDir(CameraType.back)
           }
         >
-          {"Flip Camera"}
+          <FlipHorizontal2 />
         </Button>
       </View>
     </Camera>
