@@ -31,7 +31,7 @@ export default function Layout() {
         options={{
           title: "",
           tabBarIcon(props) {
-            return <MaterialCommunityIcons name="home" {...props} size={30} />;
+            return <MaterialCommunityIcons name="home" {...props} size={35} />;
           },
         }}
       />
@@ -92,7 +92,7 @@ export default function Layout() {
           title: "",
           tabBarIcon(props) {
             return (
-              <MaterialCommunityIcons name="face-man" {...props} size={30} />
+              <MaterialCommunityIcons name="face-man" {...props} size={35} />
             );
           },
         }}

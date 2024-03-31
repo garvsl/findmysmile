@@ -11,12 +11,12 @@ const renderRightActions = (progress, dragAnimatedValue, ref, onDelete) => {
   const trans = progress.interpolate({
     inputRange: [0, 1],
     outputRange: [180, 0],
-    extrapolate: "clamp"
+    extrapolate: "clamp",
   });
   const opacity = dragAnimatedValue.interpolate({
     inputRange: [-100, 0],
     outputRange: [1, 0],
-    extrapolate: "clamp"
+    extrapolate: "clamp",
   });
   const pressHandler = () => {
     ref.current.close();
@@ -30,14 +30,11 @@ const renderRightActions = (progress, dragAnimatedValue, ref, onDelete) => {
       <RectButton
         style={[
           styles.rightAction,
-          { backgroundColor: "rgba(248, 0, 0, 0.8)", borderRadius: 10 }
+          { backgroundColor: "rgba(248, 0, 0, 0.8)", borderRadius: 10 },
         ]}
         onPress={pressHandler}
       >
-        <Trash
-          size={25}
-          color="white"
-        />
+        <Trash size={25} color="white" />
       </RectButton>
     </Animated.View>
   );
@@ -56,12 +53,12 @@ export const SheetCard = forwardRef(function SheetCard(
       enterStyle={{
         opacity: 1,
         x: 0,
-        scale: 1
+        scale: 1,
       }}
       exitStyle={{
         opacity: 0,
         x: -50,
-        scale: 0.9
+        scale: 0.9,
       }}
     >
       <Swipeable
@@ -76,10 +73,7 @@ export const SheetCard = forwardRef(function SheetCard(
         overshootFriction={7}
         onSwipeableWillOpen={func}
       >
-        <SheetDemo
-          open={open}
-          setOpen={setOpen}
-        >
+        <SheetDemo open={open} setOpen={setOpen}>
           <DemoCard
             text={text}
             iconText={iconText}
@@ -98,7 +92,7 @@ export const SheetCard = forwardRef(function SheetCard(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    minHeight: 300
+    minHeight: 300,
   },
   row: {
     flexDirection: "row",
@@ -107,7 +101,7 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     backgroundColor: "#efefef",
     margin: 20,
-    minHeight: 50
+    minHeight: 50,
   },
   swipedRow: {
     flexDirection: "row",
@@ -116,31 +110,31 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     backgroundColor: "#818181",
     margin: 20,
-    minHeight: 50
+    minHeight: 50,
   },
   swipedConfirmationContainer: {
-    flex: 1
+    flex: 1,
   },
   deleteConfirmationText: {
     color: "#fcfcfc",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   deleteButton: {
     backgroundColor: "#b60000",
     flexDirection: "column",
     justifyContent: "center",
-    height: "100%"
+    height: "100%",
   },
   deleteButtonText: {
     color: "#fcfcfc",
     fontWeight: "bold",
-    padding: 3
+    padding: 3,
   },
   rightAction: {
     alignItems: "center",
     paddingRight: 20,
     paddingLeft: 20,
     flex: 1,
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });

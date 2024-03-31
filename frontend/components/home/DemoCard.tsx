@@ -2,7 +2,7 @@ import React from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Card, H4, YStack } from "tamagui";
+import { Card, H4, Image, Stack, YStack } from "tamagui";
 
 export const DemoCard = ({
   text,
@@ -11,7 +11,7 @@ export const DemoCard = ({
   size,
   children,
   setOpen,
-  props
+  props,
 }: any) => {
   const tap = Gesture.Tap().onStart(() => {
     if (setOpen) {
@@ -28,20 +28,23 @@ export const DemoCard = ({
         pressStyle={{ scale: 1.025 }}
         {...props}
       >
-        <Card.Header
-          flexDirection="row"
-          alignItems="center"
-          gap={10}
-          padded
-        >
-          <MaterialCommunityIcons
+        <Card.Header flexDirection="column" gap={10} padded>
+          {/* <MaterialCommunityIcons
             name={iconText}
             color={iconColor}
             size={size}
+          /> */}
+          <Image
+            source={{
+              uri: "https://picsum.photos/200/300",
+              height: 130,
+            }}
           />
           <YStack>
-            <H4 color={"black"}>{text}</H4>
             {children}
+            <H4 color={"black"} textAlign="left">
+              {text}
+            </H4>
           </YStack>
         </Card.Header>
         <Card.Background></Card.Background>

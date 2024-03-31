@@ -10,66 +10,66 @@ import { MySafeAreaView } from "../../components/MySafeAreaView";
 import { MyStack } from "../../components/MyStack";
 
 export default function Home() {
-  // const [defaultItems, setDefaultItems] = useState([
-  //   {
-  //     id: 123,
-  //     text: "Welcome to OpenHealth",
-  //     iconText: "heart",
-  //     iconColor: "red",
-  //     size: 35
-  //   },
-  //   {
-  //     id: 223,
-  //     text: "Your personal objective",
-  //     iconText: "pen",
-  //     iconColor: "darkblue",
-  //     size: 50
-  //   },
-  //   {
-  //     id: 323,
-  //     text: "Todays Tracking",
-  //     iconText: "calendar",
-  //     iconColor: "orange",
-  //     size: 50
-  //   },
-  //   {
-  //     id: 423,
-  //     text: "Receive Coaching",
-  //     iconText: "account-group",
-  //     iconColor: "purple",
-  //     size: 50
-  //   },
-  //   {
-  //     id: 523,
-  //     text: "Health Check-In",
-  //     iconText: "plus-circle",
-  //     iconColor: "green",
-  //     size: 50
-  //   }
-  // ]);
-  // const [filteredItems, setFilteredItems] = useState(defaultItems);
-  // const [refs, setRefs] = useState([]);
+  const [defaultItems, setDefaultItems] = useState([
+    {
+      id: 123,
+      text: "Welcome to OpenHealth",
+      iconText: "heart",
+      iconColor: "red",
+      size: 35,
+    },
+    {
+      id: 223,
+      text: "Your personal objective",
+      iconText: "pen",
+      iconColor: "darkblue",
+      size: 50,
+    },
+    {
+      id: 323,
+      text: "Todays Tracking",
+      iconText: "calendar",
+      iconColor: "orange",
+      size: 50,
+    },
+    {
+      id: 423,
+      text: "Receive Coaching",
+      iconText: "account-group",
+      iconColor: "purple",
+      size: 50,
+    },
+    {
+      id: 523,
+      text: "Health Check-In",
+      iconText: "plus-circle",
+      iconColor: "green",
+      size: 50,
+    },
+  ]);
+  const [filteredItems, setFilteredItems] = useState(defaultItems);
+  const [refs, setRefs] = useState([]);
 
-  // useEffect(() => {
-  //   setRefs(defaultItems.map(() => createRef()));
-  //   setFilteredItems(defaultItems);
-  // }, [defaultItems]);
+  useEffect(() => {
+    setRefs(defaultItems.map(() => createRef()));
+    setFilteredItems(defaultItems);
+  }, [defaultItems]);
 
-  // const handleDelete = (itemId) => {
-  //   setDefaultItems((currentItems) =>
-  //     currentItems.filter((item) => item.id !== itemId)
-  //   );
-  // };
-  // const onSearch = (searchText) => {
-  //   if (searchText) {
-  //     const searchResults = defaultItems.filter((item) =>
-  //       item.text.toLowerCase().includes(searchText.toLowerCase())
-  //     );
-  //     setFilteredItems(searchResults);
-  //   } else {
-  //     setFilteredItems(defaultItems);
-  //   }
-  // };
+  const handleDelete = (itemId) => {
+    setDefaultItems((currentItems) =>
+      currentItems.filter((item) => item.id !== itemId)
+    );
+  };
+  const onSearch = (searchText) => {
+    if (searchText) {
+      const searchResults = defaultItems.filter((item) =>
+        item.text.toLowerCase().includes(searchText.toLowerCase())
+      );
+      setFilteredItems(searchResults);
+    } else {
+      setFilteredItems(defaultItems);
+    }
+  };
 
   return (
     <MyStack
@@ -80,28 +80,14 @@ export default function Home() {
       backgroundColor={"white"}
     >
       <MySafeAreaView width={"100%"} gap={25}>
-        {/* <YStack
-          gap={30}
-          padding={"3.5%"}
-        >
-          <HeaderBar />
+        <YStack gap={30} padding={"3.5%"}>
+          {/* <HeaderBar /> */}
 
-          <XStack
-            justifyContent="flex-start"
-            flexDirection="column"
-            gap={8}
-          >
-            <Text
-              fontSize={"$7"}
-              fontWeight={"600"}
-              color={"black"}
-            >
-              Welcome Back, Garv!
+          <XStack justifyContent="flex-start" flexDirection="column" gap={8}>
+            <Text fontSize={"$7"} fontWeight={"600"} color={"black"}>
+              Welcome Back!
             </Text>
-            <SearchBar
-              placeHolder={"Search tasks..."}
-              onSearch={onSearch}
-            />
+            <SearchBar placeHolder={"Search clinics..."} onSearch={onSearch} />
           </XStack>
         </YStack>
 
@@ -119,7 +105,7 @@ export default function Home() {
           contentContainerStyle={{
             alignItems: "center",
             paddingBottom: 50,
-            paddingTop: 20
+            paddingTop: 20,
           }}
         >
           <YStack
@@ -135,7 +121,7 @@ export default function Home() {
                 iconColor={"black"}
                 size={25}
                 props={{
-                  width: "100%"
+                  width: "100%",
                 }}
               />
             ) : (
@@ -165,7 +151,7 @@ export default function Home() {
               </AnimatePresence>
             )}
           </YStack>
-        </ScrollView> */}
+        </ScrollView>
       </MySafeAreaView>
     </MyStack>
   );
