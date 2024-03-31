@@ -11,6 +11,8 @@ from llama_index.llms.openai import OpenAI
 
 
 load_dotenv()
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
+
 lc_embed_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-mpnet-base-v2"
 )
