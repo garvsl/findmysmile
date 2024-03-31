@@ -41,7 +41,18 @@ const renderRightActions = (progress, dragAnimatedValue, ref, onDelete) => {
 };
 
 export const SheetCard = forwardRef(function SheetCard(
-  { text, iconText, iconColor, size, func, children, onDelete }: any,
+  {
+    text,
+    location,
+    src,
+    rating,
+    iconText,
+    iconColor,
+    size,
+    func,
+    children,
+    onDelete,
+  }: any,
   ref: any
 ) {
   const [open, setOpen] = useState(false);
@@ -78,6 +89,9 @@ export const SheetCard = forwardRef(function SheetCard(
             text={text}
             iconText={iconText}
             iconColor={iconColor}
+            location={location}
+            src={src}
+            rating={rating}
             size={size}
             setOpen={setOpen}
           >

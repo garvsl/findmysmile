@@ -13,38 +13,53 @@ export default function Home() {
   const [defaultItems, setDefaultItems] = useState([
     {
       id: 123,
-      text: "Welcome to OpenHealth",
+      text: "Center City Dental",
       iconText: "heart",
       iconColor: "red",
       size: 35,
+      img: "https://s3-media0.fl.yelpcdn.com/bphoto/RRvjQm7HcAQSlK0FbkYtuQ/348s.jpg",
+      rating: 4.2,
+      location: "Philadelphia, PA",
     },
     {
       id: 223,
-      text: "Your personal objective",
+      text: "Lumia Dental",
       iconText: "pen",
       iconColor: "darkblue",
       size: 50,
+      img: "https://s3-media0.fl.yelpcdn.com/bphoto/iVZT-6A_SG-eIFvTcP8nRg/348s.jpg",
+      rating: 4.6,
+      location: "New York, NY",
     },
     {
       id: 323,
-      text: "Todays Tracking",
+      text: "Midtown Dental",
       iconText: "calendar",
       iconColor: "orange",
       size: 50,
+      img: "https://s3-media0.fl.yelpcdn.com/bphoto/7OhCHksXs_F1QTTDGx5Pmw/348s.jpg",
+      rating: 4.8,
+      location: "New York, NY",
     },
     {
       id: 423,
-      text: "Receive Coaching",
+      text: "Princeton Dental",
       iconText: "account-group",
       iconColor: "purple",
       size: 50,
+      img: "https://s3-media0.fl.yelpcdn.com/bphoto/CecrwlP5ST91dksGj_JGHA/348s.jpg",
+      rating: 4.9,
+      location: "Princeton, NJ",
     },
     {
       id: 523,
-      text: "Health Check-In",
+      text: "Smile Craft",
       iconText: "plus-circle",
       iconColor: "green",
       size: 50,
+      img: "https://s3-media0.fl.yelpcdn.com/bphoto/cndXaZREuTrJXRUy9YC-mw/348s.jpg",
+      rating: 4.4,
+      location: "Boston, MA",
     },
   ]);
   const [filteredItems, setFilteredItems] = useState(defaultItems);
@@ -132,6 +147,9 @@ export default function Home() {
                       ref={refs[index]}
                       key={index}
                       text={item.text}
+                      src={item.img}
+                      rating={item.rating}
+                      location={item.location}
                       iconText={item.iconText}
                       iconColor={item.iconColor}
                       size={item.size}

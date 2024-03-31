@@ -2,11 +2,14 @@ import React from "react";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { runOnJS } from "react-native-reanimated";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Card, H4, Image, Stack, YStack } from "tamagui";
+import { Card, H4, H5, Image, Stack, YStack } from "tamagui";
 
 export const DemoCard = ({
   text,
+  location,
+  rating,
   iconText,
+  src,
   iconColor,
   size,
   children,
@@ -36,15 +39,31 @@ export const DemoCard = ({
           /> */}
           <Image
             source={{
-              uri: "https://picsum.photos/200/300",
+              uri: src,
               height: 130,
+            }}
+            style={{
+              borderRadius: 10,
+              objectFit: "cover",
             }}
           />
           <YStack>
             {children}
+            <H5
+              color={"black"}
+              fontWeight={"bold"}
+              mb={-6}
+              size={"$2"}
+              textAlign="left"
+            >
+              {rating}/5
+            </H5>
             <H4 color={"black"} textAlign="left">
               {text}
             </H4>
+            <H5 color={"gray"} mt={-6} size={"$4"} textAlign="left">
+              {location}
+            </H5>
           </YStack>
         </Card.Header>
         <Card.Background></Card.Background>
