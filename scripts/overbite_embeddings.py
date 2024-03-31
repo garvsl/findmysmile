@@ -11,6 +11,7 @@ from llama_index.llms.openai import OpenAI
 
 
 load_dotenv()
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
 # get API key to create embeddings
 model_name="models/embeddings-gecko-001"
 api_key = os.getenv('GOOGLE_PALM_API_KEY')

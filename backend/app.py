@@ -12,6 +12,10 @@ import os
 import torchvision.models as models
 from torchvision.datasets import ImageFolder
 import random
+import sys
+# caution: path[0] is reserved for script path (or '' in REPL)
+sys.path.insert(1, '/Users/ayandas/Desktop/VS_Code_Projects/findmysmile/scripts/')
+from treatment_and_locations_recommended import treatment_recommendation, location_recommendation, treatment_and_locations
 
 load_dotenv()
 app = Flask(__name__)
@@ -99,6 +103,16 @@ def pred():
 
 #make a request to /pred
 #curl -X POST -F "image-data/allon6/1003-1-768x768.jpg" http://localhost:5000/pred
+@app.route("/treatments")
+@cross_origin()
+def treatments():
+    try:
+        treatment_recommendation, location_recommendation = treatment_and_locations()
+        return jsonify({'treatment-recommendation': treatment_recommendation},
+                       {'location-recommendation': location_recommendation})
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({'error': str(e)}), 400
 
 if __name__ == "__main__":
   app.run()

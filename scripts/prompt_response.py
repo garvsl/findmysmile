@@ -46,7 +46,7 @@ llm = OpenAI(model="gpt-4", max_tokens=3050)
 settings.llm = llm  #set the llm to openAI
 settings.embed_model = nomic_embded_model  #set the embedding model to nomic
 
-documents = SimpleDirectoryReader(input_dir="../embedding_output").load_data()  # read the text files within embedding_output directory
+documents = SimpleDirectoryReader(input_dir="/Users/ayandas/Desktop/VS_Code_Projects/findmysmile/embedding_output").load_data()  # read the text files within embedding_output directory
 #print("Data that has been processed:\n")
 #print(documents)
 #create an index from the documents
@@ -60,6 +60,7 @@ query_engine = index.as_query_engine()
 # Query the engine
 treatment_recommendation = query_engine.query(f"Based on the following result containing the user's sentiment and an extended form of the prompt as shown below:\n {result}. \n Based on the above prompt, as well as the information you have saved based on the VectorStoreIndex context regarding various dental procedures, provide me with the recommended treatment for the patient in the following format:\n Recommended Treatment: <name of dental procedures>, the dental procedure should be based on the following list of procedures: [crossbite, emax-veeneer, gap, makeover, openbite, overbite, overjet, ziconium] as you already have information regarding what each of these procedures are but don't explcitly reference this list.\n Explanation: <explanation of the treatment and why the user was recommended this specific treatment>. One thing I suggest taking into consideratio is the user's sentiment, as it will help you determine the best course of action for the user, since a sentiment based on a prompt with urgency should be of utmost priority, where the symptoms are severe. A prompt with sentiment of anxiety/concern may have a pateint with symptomps that are mild to moderate. A prompt with sentiment of inquiry is most likely neutral and patient may simply be seeking out informative response rather than treatment recommendation and a sentiment of satisfaction/dissatisfaction should have a thank you response or a response to comfort the user's dissatisfaction, use your best judgement when providing an explanation. Also, you are interacting with the user, so it's best to assume that your response should be based on the dental procedures that you have have been provided with through the VectorStoreIndex context and the response should address the user in a conversational manner. Provide advice based on the context of the procedures you got from the documents, but also make sure to include at the end that a doctor should be consulted for further information at the end, but don't provide a simple vague answer to just go and visit the doctor, that's not the kind of response the user is looking for.")
 print(treatment_recommendation)
+
 
 
 

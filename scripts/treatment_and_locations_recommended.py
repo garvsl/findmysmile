@@ -16,6 +16,7 @@ from llama_index.embeddings.langchain import LangchainEmbedding
 from langchain.embeddings import HuggingFaceEmbeddings 
 
 load_dotenv()
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
 lc_embed_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-mpnet-base-v2"
 )
@@ -50,24 +51,30 @@ def location_lookup():
     
 user_location = location_lookup()  # test the function
 
-# now that we hvae the data, we will need to read  that data alongside the data based on the locatons, and retrieve the treatment and recommended locations using the model
+def treatment_and_locations():
+    # now that we hvae the data, we will need to read  that data alongside the data based on the locatons, and retrieve the treatment and recommended locations using the model
 
-location_data = SimpleDirectoryReader(input_files=["../prompt-data/MA-Data-Organized.json", "../prompt-data/NJ-Data-Organized.json", "../prompt-data/NY-Data-Organized.json"]).load_data()
+    location_data = SimpleDirectoryReader(input_files=["../prompt-data/MA-Data-Organized.json", "../prompt-data/NJ-Data-Organized.json", "../prompt-data/NY-Data-Organized.json"]).load_data()
 
 #index creation
-index = VectorStoreIndex.from_documents(location_data)  # embed the pdf content
+    index = VectorStoreIndex.from_documents(location_data)  # embed the pdf content
 
 #embedding = nomic_embded_model.get_text_embedding("crossbite.pdf")
 
 #query engine
-query_engine = index.as_query_engine()
+    query_engine = index.as_query_engine()
 
-location_recommendation = query_engine.query(f"Based on the following prompt as provided below:\n{treatment_recommendation}\n as well as the information obtained pertaining to the user's location: {user_location}, provide a list of 15-20 places of the nearby locations for the user based on the location data that you have available at {index}. Particualrly provide information of the name of the clinic, the price, the location, rating (optional), phone contact information, and full address of the individual clinics.")
-print("\n\n")  #create some spacings
-print("Procedure Recommendation:")
-print(treatment_recommendation) 
-print("\nLocations Recommended:")
-print(location_recommendation)  # this should cause an error
+    location_recommendation = query_engine.query(f"Based on the following prompt as provided below:\n{treatment_recommendation}\n as well as the information obtained pertaining to the user's location: {user_location}, provide a list of 15-20 places of the nearby locations for the user based on the location data that you have available at {index}. Particualrly provide information of the name of the clinic, the price, the location, rating (optional), phone contact information, and full address of the individual clinics.")
+    print("\n\n")  #create some spacings
+    print("Procedure Recommendation:")
+    print(treatment_recommendation) 
+    print("\nLocations Recommended:")
+    print(location_recommendation)
+    return treatment_recommendation, location_recommendation
+
+treatment_and_locations()
+    
+
 
 #save the resulting output in a json format
 #response_data = {"response" : response}
@@ -86,6 +93,28 @@ with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
     txt_file.write(response_text)
 
     '''
+
+
+'''
+# now that we hvae the data, we will need to read  that data alongside the data based on the locatons, and retrieve the treatment and recommended locations using the model
+
+location_data = SimpleDirectoryReader(input_files=["../prompt-data/MA-Data-Organized.json", "../prompt-data/NJ-Data-Organized.json", "../prompt-data/NY-Data-Organized.json"]).load_data()
+
+#index creation
+index = VectorStoreIndex.from_documents(location_data)  # embed the pdf content
+
+#embedding = nomic_embded_model.get_text_embedding("crossbite.pdf")
+
+#query engine
+query_engine = index.as_query_engine()
+
+location_recommendation = query_engine.query(f"Based on the following prompt as provided below:\n{treatment_recommendation}\n as well as the information obtained pertaining to the user's location: {user_location}, provide a list of 15-20 places of the nearby locations for the user based on the location data that you have available at {index}. Particualrly provide information of the name of the clinic, the price, the location, rating (optional), phone contact information, and full address of the individual clinics.")
+print("\n\n")  #create some spacings
+print("Procedure Recommendation:")
+print(treatment_recommendation) 
+print("\nLocations Recommended:")
+print(location_recommendation)  # this should cause an error
+'''
 
 
 

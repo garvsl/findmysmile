@@ -1,5 +1,3 @@
-Classification: Anxiety/concern
+Classification: Anxiety/Concern
 
-Sentiment Description: The sentiment expressed in the prompt displays a clear sense of anxiety and concern related to a personal health issue. 
-
-Extended Prompt: I'm growing increasingly anxious about this persistent tooth pain that I've been experiencing. It's becoming a cause for considerable worry for me. Could you provide some guidance on what steps I might consider taking next?
+Extended Prompt: There's a continuous feeling of discomfort weighing on my nerves due to this persistent toothache that seems to worsen by the day. Could you provide some guidance on how I should tackle this situation?

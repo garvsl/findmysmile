@@ -14,7 +14,8 @@ from llama_index.llms.openai import OpenAI
 # Note: SimpleDirectoryReader needs to point to a directory, and it will read whatever file is within that specific directory, don't point it to a file, it will cause an error
 
 #print(os.listdir("/Users/ayandas/Desktop/VS_Code_Projects/findmysmile/scripts/data"))
-load_dotenv()   # if this isn't loaded, the openAI api key won't work
+load_dotenv()
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
 
 nomic_api_key = "nk-HIAdG-oqcxQ9TBsYdhQ4ygRsgp-Lr7D_I6Y4Q_eBZP8"
 OpenAI.api_key = os.getenv('OPENAI_API_KEY')
