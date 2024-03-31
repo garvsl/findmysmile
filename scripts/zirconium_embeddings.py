@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from langchain.embeddings import HuggingFaceEmbeddings 
 from llama_index.embeddings.langchain import LangchainEmbedding
 import json
@@ -7,6 +8,10 @@ nest_asyncio.apply()
 from llama_index.core import settings
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 from llama_index.llms.openai import OpenAI
+
+
+load_dotenv()
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
 
 lc_embed_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-mpnet-base-v2"
@@ -33,7 +38,7 @@ index = VectorStoreIndex.from_documents(zirconium)  # embed the pdf content
 query_engine = index.as_query_engine()
 response = query_engine.query("Provide me details pertaining to the zirconium dental procedure based on the data you have been provided.")
 print("\n\n")  #create some spacings
-print("Query Response For Gap:")
+print("Query Response For Zicronium:")
 print(response)  # this should cause an error
 
 #save the resulting output in a json format

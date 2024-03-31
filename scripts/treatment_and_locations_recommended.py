@@ -6,6 +6,7 @@ import os
 import urllib3
 from dotenv import load_dotenv
 import nest_asyncio
+from prompt_response import treatment_recommendation
 nest_asyncio.apply()
 from llama_index.embeddings.nomic import NomicEmbedding
 from llama_index.core import settings
@@ -20,12 +21,9 @@ lc_embed_model = HuggingFaceEmbeddings(
 )
 langchain_embed_model = LangchainEmbedding(lc_embed_model)
 
-llm = OpenAI(model="gpt-4", max_tokens=3000)  # adjust this as needed
+llm = OpenAI(model="gpt-4", max_tokens=4000)  # adjust this as needed
 settings.llm = llm  #set the llm to openAI
 settings.embed_model = langchain_embed_model  #set the embedding model to nomic
-
-# read the json data on the locationss
-location_data = SimpleDirectoryReader(input_files=["../prompt-data/MA-Data-Organized.json", "../prompt-data/NJ-Data-Organized.json", "../prompt-data/NY-Data-Organized.json"]).load_data()
 
 #print(location_data)   # successfully able to process the json data
 
@@ -37,7 +35,7 @@ def location_lookup():
         response = http.request("GET", "http://ipinfo.io/json")
          # Decode response data from bytes to string and load into a Python dictionary
         data = json.loads(response.data.decode('utf-8'))
-        print (data)
+        #print (data)
         json_response = str(response.data)
         json_response.replace("\n", " ")
         # save the data to a json format
@@ -50,13 +48,44 @@ def location_lookup():
     except urllib3.exceptions.TimeoutError as e:
         print(f"Request timed out: {e}")
     
-location_lookup()  # test the function
-    
+user_location = location_lookup()  # test the function
+
+# now that we hvae the data, we will need to read  that data alongside the data based on the locatons, and retrieve the treatment and recommended locations using the model
+
+location_data = SimpleDirectoryReader(input_files=["../prompt-data/MA-Data-Organized.json", "../prompt-data/NJ-Data-Organized.json", "../prompt-data/NY-Data-Organized.json"]).load_data()
+
+#index creation
+index = VectorStoreIndex.from_documents(location_data)  # embed the pdf content
+
+#embedding = nomic_embded_model.get_text_embedding("crossbite.pdf")
+
+#query engine
+query_engine = index.as_query_engine()
+
+location_recommendation = query_engine.query(f"Based on the following prompt as provided below:\n{treatment_recommendation}\n as well as the information obtained pertaining to the user's location: {user_location}, provide a list of 15-20 places of the nearby locations for the user based on the location data that you have available at {index}. Particualrly provide information of the name of the clinic, the price, the location, rating (optional), phone contact information, and full address of the individual clinics.")
+print("\n\n")  #create some spacings
+print("Procedure Recommendation:")
+print(treatment_recommendation) 
+print("\nLocations Recommended:")
+print(location_recommendation)  # this should cause an error
+
+#save the resulting output in a json format
+#response_data = {"response" : response}
+
+'''
+output_dir = "../embedding_output"
+os.makedirs(output_dir, exist_ok=True)
+
+response_text = str(response)
+
+# Define the filepath for the text file
+txt_file_path = os.path.join(output_dir, "zirconium_query_response.txt")
+
+# Save the response in text format
+with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
+    txt_file.write(response_text)
+
+    '''
 
 
 
-
-
-
-
-# get API key to create embeddings

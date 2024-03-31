@@ -1,3 +1,5 @@
 Classification: Anxiety/concern
 
-Expanded Prompt: I find myself in a state of significant apprehension due to a persistent toothache that's been troubling me lately. I'm unsure what course of action I should be taking in view of this discomfort. Can you offer any suggestions?
+Sentiment Description: The sentiment expressed in the prompt displays a clear sense of anxiety and concern related to a personal health issue. 
+
+Extended Prompt: I'm growing increasingly anxious about this persistent tooth pain that I've been experiencing. It's becoming a cause for considerable worry for me. Could you provide some guidance on what steps I might consider taking next?
