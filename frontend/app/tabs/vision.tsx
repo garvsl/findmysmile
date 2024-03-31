@@ -168,6 +168,19 @@ export default function Vision() {
     });
   };
 
+  const reqModel = async () => {
+    const response = await fetch("http://127.0.0.1:5000/llm", {
+      method: "POST",
+      body: JSON.stringify({ text_prompt: text }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    console.log(result);
+    setModelTxt(result);
+  };
+
   const takePicture = async () => {
     const photo = await cameraRef.current.takePictureAsync();
     setPicture(photo.uri);
@@ -280,7 +293,7 @@ export default function Vision() {
                 onChangeText={setText}
                 placeholder="Enter your details..."
               />
-              <Button size={"$4"}>
+              <Button onPress={() => reqModel()} size={"$4"}>
                 <Send size={"$1"} />
               </Button>
             </XStack>
