@@ -11,6 +11,7 @@ import torch.nn as nn
 import os 
 import torchvision.models as models
 from torchvision.datasets import ImageFolder
+import random
 
 load_dotenv()
 app = Flask(__name__)
@@ -20,7 +21,12 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 #set config to debug based on .env debug status
 app.config["DEBUG"] = os.environ.get("FLASK_DEBUG")
-  
+
+treatment_procedures = ["crossbite", "emax-veneer","gap","makeover", "openbite", "overbite", "overjet", "underbite", "zirconium"]
+
+selected_procedure = random.choice(treatment_procedures)
+print(selected_procedure)  # check to see the procedure that was selected
+
 @app.route("/")
 def hello():
   return "Hello World!"   
@@ -86,8 +92,10 @@ def pred():
         return jsonify({'prediction': prediction})
     except Exception as e:
         print(f"Error: {e}")
-        # Handle unexpected errors
-        return jsonify({'error': str(e)}), 500
+        # in the case that an error occurs, instead, simply print out the randomly genereated treatment and return the error message
+        print(f"Randomly generated treatment\n: {selected_procedure}\n\n")
+        # Handle unexpected errors --> expect a bunch of error message after this message on the terminal
+        return jsonify({'error': str(e)}), 500, selected_procedure  # function should return three things so that we can call upon it and save the resulting responses to compare the two models
 
 #make a request to /pred
 #curl -X POST -F "image-data/allon6/1003-1-768x768.jpg" http://localhost:5000/pred

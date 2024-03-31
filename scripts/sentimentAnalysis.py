@@ -55,3 +55,5 @@ txt_file_path = os.path.join(output_dir, "Sentiment_And_Extended_Output.txt")
 # Save the response in text format
 with open(txt_file_path, 'w', encoding='utf-8') as txt_file:
     txt_file.write(response_text)
+
+

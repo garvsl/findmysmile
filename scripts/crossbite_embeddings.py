@@ -3,6 +3,7 @@ This file will use nomic embeddings to embed the crossite.pdf data
 '''
 import json
 import os
+from dotenv import load_dotenv
 import nest_asyncio
 nest_asyncio.apply()
 from llama_index.embeddings.nomic import NomicEmbedding
@@ -13,6 +14,7 @@ from llama_index.llms.openai import OpenAI
 # Note: SimpleDirectoryReader needs to point to a directory, and it will read whatever file is within that specific directory, don't point it to a file, it will cause an error
 
 #print(os.listdir("/Users/ayandas/Desktop/VS_Code_Projects/findmysmile/scripts/data"))
+load_dotenv()   # if this isn't loaded, the openAI api key won't work
 
 nomic_api_key = "nk-HIAdG-oqcxQ9TBsYdhQ4ygRsgp-Lr7D_I6Y4Q_eBZP8"
 OpenAI.api_key = os.getenv('OPENAI_API_KEY')
@@ -35,6 +37,7 @@ print(crossbite)  # print out the data to see what it looks like raw
 
 #index creation
 index = VectorStoreIndex.from_documents(crossbite)  # embed the pdf content
+print("Numerical Embeddings:")
 
 #embedding = nomic_embded_model.get_text_embedding("crossbite.pdf")
 

@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from langchain.embeddings import HuggingFaceEmbeddings 
 from llama_index.embeddings.langchain import LangchainEmbedding
 import json
@@ -8,6 +9,8 @@ from llama_index.core import settings
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 from llama_index.llms.openai import OpenAI
 
+
+load_dotenv()
 lc_embed_model = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-mpnet-base-v2"
 )
